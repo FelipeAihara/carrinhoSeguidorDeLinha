@@ -8,20 +8,22 @@
 - IN4 = motor direita para trás
 - Sensor do pino 20 = esquerda
 - Sensor do pino 21 = direita
+PARA OTIMIZAR O CÓDIGO
+- Usar o FPGIO
+- Colocar a parte do loop na SRAM (acesso mais rápido, minuto 12 do video de memoria)
  */
 
 #include <zephyr/kernel.h>             // Funções básicas do Zephyr (ex: k_msleep, k_thread, etc.)
-#include <zephyr/device.h>             // API para obter e utilizar dispositivos do sistema
+#include <zephyr/device.h>             // A'PI para obter e utilizar dispositivos do sistema
 #include <zephyr/drivers/gpio.h>       // API para controle de pinos de entrada/saída (GPIO)
 #include <pwm_z42.h>                // Biblioteca personalizada com funções de controle do TPM (Timer/PWM Module)
 
-// Define o valor do registrador MOD do TPM para configurar o período do PWM
+// Define o valor do regAistrador MOD do TPM para configurar o período do PWM
 #define TPM_MODULE 1000         // Define a frequência do PWM fpwm = (TPM_CLK / (TPM_MODULE * PS))
 #define SLEEP_TIME_MS 1000
 #define INPUT_PORT DT_NODELABEL(gpioe)
 #define INPUT_PIN1 20
-#define INPUT_PIN2 21g
-#define velocidade 50 // Vai de 0 a 100
+#define INPUT_PIN2 21
 
 
 int main(void)
@@ -48,7 +50,7 @@ int main(void)
     }
 
     // Configura os motores
-    pwm_tpm_Init(TPM0, TPM_PLLFLL, TPM_MODULE, TPM_CLK, PS_128, EDGE_PWM);
+    pwm_tpm_Init(TPM0, TPM_PLLFLL, TPM_MODULE, TPM_CLK, PS_128, CENTER_PWM);
     pwm_tpm_Ch_Init(TPM0, 3, TPM_PWM_H,GPIOD,3);
     pwm_tpm_Ch_Init(TPM0, 2, TPM_PWM_H,GPIOD,2);
     pwm_tpm_Ch_Init(TPM0, 0, TPM_PWM_H,GPIOD,0);
@@ -57,39 +59,31 @@ int main(void)
     while (1) {
         esquerda = gpio_pin_get(input_dev, INPUT_PIN1);
 		direita = gpio_pin_get(input_dev, INPUT_PIN2);
-        printk("Valor do esquerda: %d\n", esquerda);
-        printk("Valor do direita: %d\n", direita);
 
         if (esquerda == 0 && direita == 0) {
-            pwm_tpm_CnV(TPM0, 3, 0);
+            pwm_tpm_CnV(TPM0, 3, 800);
             pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, 0);
+            pwm_tpm_CnV(TPM0, 0, 800);
             pwm_tpm_CnV(TPM0, 5, 0);
-            k_msleep(100);
-        }
-        else if (esquerda == 0 && direita == 1) {
-            pwm_tpm_CnV(TPM0, 3, 0);
-            pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, TPM_MODULE);
-            pwm_tpm_CnV(TPM0, 5, 0);
-            printk("Passou aqui: esquerda == 0 && direita == 1\n");
-            k_msleep(100);
         }
         else if (esquerda == 1 && direita == 0) {
-            pwm_tpm_CnV(TPM0, 3, TPM_MODULE);
+            pwm_tpm_CnV(TPM0, 3, 0);
+            pwm_tpm_CnV(TPM0, 2, 0);
+            pwm_tpm_CnV(TPM0, 0, 1000);
+            pwm_tpm_CnV(TPM0, 5, 0);
+        }
+        else if (esquerda == 0 && direita == 1) {
+            pwm_tpm_CnV(TPM0, 3, 1000);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 0);
             pwm_tpm_CnV(TPM0, 5, 0);
-            k_msleep(100);
+
         }
         else if (esquerda == 1 && direita == 1) {
-            pwm_tpm_CnV(TPM0, 3, TPM_MODULE);
+            pwm_tpm_CnV(TPM0, 3, 800);
             pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, TPM_MODULE);
+            pwm_tpm_CnV(TPM0, 0, 800);
             pwm_tpm_CnV(TPM0, 5, 0);
-            printk("Passou aqui: esquerda == 1 && direita == 1\n");
-            k_msleep(100);
         }
-        k_msleep(500);
     }
 }
