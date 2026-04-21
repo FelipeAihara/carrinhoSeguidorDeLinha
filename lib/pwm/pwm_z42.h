@@ -12,7 +12,6 @@
 #include <stdint.h>
 #include "MKL25Z4.h"
 
- 
 // TPM clock source select
 // Selects the clock source for the TPM counter clock
 #define TPM_CLK_DIS 	0 	// Clock disabled

@@ -14,7 +14,7 @@
             "name": "PIO Debug",
             "executable": "C:/Users/fyaih/Documents/PlatformIO/Projects/carrinhoSeguidorDeLinha/.pio/build/frdm_kl25z/firmware.elf",
             "projectEnvName": "frdm_kl25z",
-            "toolchainBinDir": "C:/Users/fyaih/.platformio/packages/toolchain-gccarmnoneeabi@1.80201.181220/bin",
+            "toolchainBinDir": "C:/Users/fyaih/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "svdPath": "C:/Users/fyaih/.platformio/platforms/freescalekinetis/misc/svd/MKL25Z4.svd",
             "preLaunchTask": {
@@ -28,7 +28,7 @@
             "name": "PIO Debug (skip Pre-Debug)",
             "executable": "C:/Users/fyaih/Documents/PlatformIO/Projects/carrinhoSeguidorDeLinha/.pio/build/frdm_kl25z/firmware.elf",
             "projectEnvName": "frdm_kl25z",
-            "toolchainBinDir": "C:/Users/fyaih/.platformio/packages/toolchain-gccarmnoneeabi@1.80201.181220/bin",
+            "toolchainBinDir": "C:/Users/fyaih/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "svdPath": "C:/Users/fyaih/.platformio/platforms/freescalekinetis/misc/svd/MKL25Z4.svd"
         },
@@ -38,7 +38,7 @@
             "name": "PIO Debug (without uploading)",
             "executable": "C:/Users/fyaih/Documents/PlatformIO/Projects/carrinhoSeguidorDeLinha/.pio/build/frdm_kl25z/firmware.elf",
             "projectEnvName": "frdm_kl25z",
-            "toolchainBinDir": "C:/Users/fyaih/.platformio/packages/toolchain-gccarmnoneeabi@1.80201.181220/bin",
+            "toolchainBinDir": "C:/Users/fyaih/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "svdPath": "C:/Users/fyaih/.platformio/platforms/freescalekinetis/misc/svd/MKL25Z4.svd",
             "loadMode": "manual"

@@ -21,9 +21,13 @@ PARA OTIMIZAR O CÓDIGO
 // Define o valor do regAistrador MOD do TPM para configurar o período do PWM
 #define TPM_MODULE 1000         // Define a frequência do PWM fpwm = (TPM_CLK / (TPM_MODULE * PS))
 #define SLEEP_TIME_MS 1000
-#define INPUT_PORT DT_NODELABEL(gpioe)
-#define INPUT_PIN1 20
-#define INPUT_PIN2 21
+#define INPUT_PORT DT_NODELABEL(gpioa)
+#define INPUT_PIN1 1
+#define INPUT_PIN2 2
+
+void sensor_interrupt() {
+    
+}
 
 int main(void)
 {
@@ -36,20 +40,14 @@ int main(void)
         return 1;
     }
 
-	ret1 = gpio_pin_configure(input_dev, INPUT_PIN1, GPIO_INPUT);
-    if (ret1 != 0) {
-        printk("Erro ao configurar pino %d\n", INPUT_PIN1);
-        return 1;
-    }
-
-	ret2 = gpio_pin_configure(input_dev, INPUT_PIN2, GPIO_INPUT);
-    if (ret2 != 0) {
-        printk("Erro ao configurar pino %d\n", INPUT_PIN2);
-        return 1;
-    }
+    // Configura os sensores e o interrupt
+	gpio_pin_configure(input_dev, INPUT_PIN1, GPIO_INPUT);
+	gpio_pin_configure(input_dev, INPUT_PIN2, GPIO_INPUT);
+    gpio_pin_interrupt_configure(input_dev, INPUT_PIN1, GPIO_INT_EDGE_TO_ACTIVE);
+    gpio_pin_interrupt_configure(input_dev, INPUT_PIN2, GPIO_INT_EDGE_TO_ACTIVE);
 
     // Configura os motores
-    pwm_tpm_Init(TPM0, TPM_PLLFLL, TPM_MODULE, TPM_CLK, PS_128, CENTER_PWM);
+    pwm_tpm_Init(TPM0, TPM_PLLFLL, TPM_MODULE, TPM_CLK, PS_8, CENTER_PWM);
     pwm_tpm_Ch_Init(TPM0, 3, TPM_PWM_H,GPIOD,3);
     pwm_tpm_Ch_Init(TPM0, 2, TPM_PWM_H,GPIOD,2);
     pwm_tpm_Ch_Init(TPM0, 0, TPM_PWM_H,GPIOD,0);
@@ -59,26 +57,26 @@ int main(void)
         esquerda = gpio_pin_get(input_dev, INPUT_PIN1);
 		direita = gpio_pin_get(input_dev, INPUT_PIN2);
 
-        if (esquerda == 1 && direita == 1) {
+        if (esquerda == 0 && direita == 0) {
             pwm_tpm_CnV(TPM0, 3, 800);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 800);
             pwm_tpm_CnV(TPM0, 5, 0);
         }
         else if (esquerda == 1 && direita == 0) {
-            pwm_tpm_CnV(TPM0, 3, 1000);
-            pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, 0);
-            pwm_tpm_CnV(TPM0, 5, 0);
-        }
-        else if (esquerda == 0 && direita == 1) {
             pwm_tpm_CnV(TPM0, 3, 0);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 1000);
             pwm_tpm_CnV(TPM0, 5, 0);
+        }
+        else if (esquerda == 0 && direita == 1) {
+            pwm_tpm_CnV(TPM0, 3, 1000);
+            pwm_tpm_CnV(TPM0, 2, 0);
+            pwm_tpm_CnV(TPM0, 0, 0);
+            pwm_tpm_CnV(TPM0, 5, 0);
 
         }
-        else if (esquerda == 0 && direita == 0) {
+        else if (esquerda == 1 && direita == 1) {
             pwm_tpm_CnV(TPM0, 3, 800);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 800);
