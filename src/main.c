@@ -59,26 +59,26 @@ int main(void)
         esquerda = gpio_pin_get(input_dev, INPUT_PIN1);
 		direita = gpio_pin_get(input_dev, INPUT_PIN2);
 
-        if (esquerda == 1 && direita == 1) {
+        if (esquerda == 0 && direita == 0) {
             pwm_tpm_CnV(TPM0, 3, 800);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 800);
             pwm_tpm_CnV(TPM0, 5, 0);
         }
-        else if (esquerda == 1 && direita == 0) {
+        else if (esquerda == 0 && direita == 1) {
             pwm_tpm_CnV(TPM0, 3, 1000);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 0);
             pwm_tpm_CnV(TPM0, 5, 0);
         }
-        else if (esquerda == 0 && direita == 1) {
+        else if (esquerda == 1 && direita == 0) {
             pwm_tpm_CnV(TPM0, 3, 0);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 1000);
             pwm_tpm_CnV(TPM0, 5, 0);
 
         }
-        else if (esquerda == 0 && direita == 0) {
+        else if (esquerda == 1 && direita == 1) {
             pwm_tpm_CnV(TPM0, 3, 800);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 800);
