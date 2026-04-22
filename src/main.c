@@ -60,13 +60,13 @@ int main(void)
 		direita = gpio_pin_get(input_dev, INPUT_PIN2);
 
         if (esquerda == 0 && direita == 0) {
-            pwm_tpm_CnV(TPM0, 3, 800);
+            pwm_tpm_CnV(TPM0, 3, 1200);
             pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, 800);
+            pwm_tpm_CnV(TPM0, 0, 1200);
             pwm_tpm_CnV(TPM0, 5, 0);
         }
         else if (esquerda == 0 && direita == 1) {
-            pwm_tpm_CnV(TPM0, 3, 1000);
+            pwm_tpm_CnV(TPM0, 3, 1200);
             pwm_tpm_CnV(TPM0, 2, 0);
             pwm_tpm_CnV(TPM0, 0, 0);
             pwm_tpm_CnV(TPM0, 5, 0);
@@ -74,14 +74,14 @@ int main(void)
         else if (esquerda == 1 && direita == 0) {
             pwm_tpm_CnV(TPM0, 3, 0);
             pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, 1000);
+            pwm_tpm_CnV(TPM0, 0, 1200);
             pwm_tpm_CnV(TPM0, 5, 0);
 
         }
         else if (esquerda == 1 && direita == 1) {
-            pwm_tpm_CnV(TPM0, 3, 800);
+            pwm_tpm_CnV(TPM0, 3, 1200);
             pwm_tpm_CnV(TPM0, 2, 0);
-            pwm_tpm_CnV(TPM0, 0, 800);
+            pwm_tpm_CnV(TPM0, 0, 1200);
             pwm_tpm_CnV(TPM0, 5, 0);
         }
     }
